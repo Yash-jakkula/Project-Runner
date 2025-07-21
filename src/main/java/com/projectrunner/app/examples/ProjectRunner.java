@@ -10,15 +10,16 @@ import java.io.IOException;
 public class ProjectRunner {
     public static void main(String[] args) throws IOException {
         ProjFlow sdk = new ProjFlow();
+        ProcessBuilder builder = new ProcessBuilder();
 
         Node start = new Node("Start", ctx -> {
             System.out.println("Hello from Start");
             try {
                 String projectPath = "D:/coding/React/hackverse";
-                new ProcessBuilder("cmd", "/c", "code \"" + projectPath + "\"").start();
+                builder.command("cmd", "/c", "code \"" + projectPath + "\"").start();
 
                 // 2. Run `npm run dev` in a new terminal inside that folder
-                new ProcessBuilder("cmd", "/c", "start cmd /k \"cd /d " + projectPath + " && npm run dev\"").start();
+                builder.command("cmd", "/c", "start cmd /k \"cd /d " + projectPath + " && npm run dev\"").start();
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -42,7 +43,8 @@ public class ProjectRunner {
 
         Node end = new Node("End", ctx -> {
             try {
-                new ProcessBuilder("cmd","/c","start chrome \""+"http://localhost:5173"+"\"").start();
+                builder.command("cmd","/c","start chrome \""+"http://localhost:5173"+"\"").start();
+                builder.command("C:/Users/jakkulayashwanth/AppData/Local/DBeaver/dbeaver.exe").start();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
